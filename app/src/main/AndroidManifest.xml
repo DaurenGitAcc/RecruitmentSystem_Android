@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.myapplication">
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.MyApplication">
+        <activity
+            android:name=".VacancyDescriptionActivity"
+            android:exported="false" />
+        <activity
+            android:name=".EditVacancyDataActivity"
+            android:exported="false" />
+        <activity
+            android:name=".EditVacancyActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ProfileCompanyEdit2Activity"
+            android:exported="false" />
+        <activity
+            android:name=".ProfileCompanyEdit1Activity"
+            android:exported="false" />
+        <activity
+            android:name=".ProfileCompanyEditActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ProfileCompanyActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ApplicantResumeActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ImgTest"
+            android:exported="false" />
+        <activity
+            android:name=".PhotoTest"
+            android:exported="false" />
+        <activity
+            android:name=".EditResumeActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ProfileEdit2Activity"
+            android:exported="false" />
+        <activity
+            android:name=".ProfileEdit1Activity"
+            android:exported="false" />
+        <activity
+            android:name=".ProfileEditActivity"
+            android:exported="false" />
+        <activity
+            android:name=".VacancyPageActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ProfileEmployeeActivity"
+            android:exported="false" />
+        <activity
+            android:name=".SearchCandidateActivity"
+            android:exported="false" />
+        <activity android:name=".MainActivity" />
+        <activity android:name=".SearchVacancyActivity" />
+        <activity
+            android:name=".LoginActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
+    </application>
+
+</manifest>

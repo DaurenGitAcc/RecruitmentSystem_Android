@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Users/absat/AndroidStudioProjects/MyApplication/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.241" />
+        <entry key="..\:/Users/absat/AndroidStudioProjects/MyApplication/app/src/main/res/drawable/button_border.xml" value="0.18" />
+        <entry key="..\:/Users/absat/AndroidStudioProjects/MyApplication/app/src/main/res/drawable/ic_background_background.xml" value="0.2595" />
+        <entry key="..\:/Users/absat/AndroidStudioProjects/MyApplication/app/src/main/res/drawable/ic_cosmo.xml" value="0.2595" />
+        <entry key="..\:/Users/absat/AndroidStudioProjects/MyApplication/app/src/main/res/drawable/ic_footer.xml" value="0.2595" />
+        <entry key="..\:/Users/absat/AndroidStudioProjects/MyApplication/app/src/main/res/drawable/ic_launcher_background.xml" value="0.2595" />
+        <entry key="..\:/Users/absat/AndroidStudioProjects/MyApplication/app/src/main/res/layout/activity_applicant_resume.xml" value="0.24864130434782608" />
+        <entry key="..\:/Users/absat/AndroidStudioProjects/MyApplication/app/src/main/res/layout/activity_edit_resume.xml" value="0.264" />
+        <entry key="..\:/Users/absat/AndroidStudioProjects/MyApplication/app/src/main/res/layout/activity_edit_vacancy.xml" value="0.2" />
+        <entry key="..\:/Users/absat/AndroidStudioProjects/MyApplication/app/src/main/res/layout/activity_edit_vacancy_data.xml" value="0.176" />
+        <entry key="..\:/Users/absat/AndroidStudioProjects/MyApplication/app/src/main/res/layout/activity_img_test.xml" value="0.24864130434782608" />
+        <entry key="..\:/Users/absat/AndroidStudioProjects/MyApplication/app/src/main/res/layout/activity_login.xml" value="0.21240942028985507" />
+        <entry key="..\:/Users/absat/AndroidStudioProjects/MyApplication/app/src/main/res/layout/activity_main.xml" value="0.264" />
+        <entry key="..\:/Users/absat/AndroidStudioProjects/MyApplication/app/src/main/res/layout/activity_photo_test.xml" value="0.24864130434782608" />
+        <entry key="..\:/Users/absat/AndroidStudioProjects/MyApplication/app/src/main/res/layout/activity_profile_company.xml" value="0.264" />
+        <entry key="..\:/Users/absat/AndroidStudioProjects/MyApplication/app/src/main/res/layout/activity_profile_company_edit.xml" value="0.24864130434782608" />
+        <entry key="..\:/Users/absat/AndroidStudioProjects/MyApplication/app/src/main/res/layout/activity_profile_company_edit1.xml" value="0.264" />
+        <entry key="..\:/Users/absat/AndroidStudioProjects/MyApplication/app/src/main/res/layout/activity_profile_company_edit2.xml" value="0.264" />
+        <entry key="..\:/Users/absat/AndroidStudioProjects/MyApplication/app/src/main/res/layout/activity_profile_edit.xml" value="0.264" />
+        <entry key="..\:/Users/absat/AndroidStudioProjects/MyApplication/app/src/main/res/layout/activity_profile_edit1.xml" value="0.24864130434782608" />
+        <entry key="..\:/Users/absat/AndroidStudioProjects/MyApplication/app/src/main/res/layout/activity_profile_edit2.xml" value="0.24864130434782608" />
+        <entry key="..\:/Users/absat/AndroidStudioProjects/MyApplication/app/src/main/res/layout/activity_profile_employee.xml" value="0.264" />
+        <entry key="..\:/Users/absat/AndroidStudioProjects/MyApplication/app/src/main/res/layout/activity_search_candidate.xml" value="0.24864130434782608" />
+        <entry key="..\:/Users/absat/AndroidStudioProjects/MyApplication/app/src/main/res/layout/activity_searchvacancy.xml" value="0.264" />
+        <entry key="..\:/Users/absat/AndroidStudioProjects/MyApplication/app/src/main/res/layout/activity_vacancy_description.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/absat/AndroidStudioProjects/MyApplication/app/src/main/res/layout/activity_vacancy_page.xml" value="0.264" />
+        <entry key="..\:/Users/absat/AndroidStudioProjects/MyApplication/app/src/main/res/layout/content_login.xml" value="0.21240942028985507" />
+        <entry key="..\:/Users/absat/AndroidStudioProjects/MyApplication/app/src/main/res/layout/fragment_first.xml" value="0.21240942028985507" />
+        <entry key="..\:/Users/absat/AndroidStudioProjects/MyApplication/app/src/main/res/layout/fragment_second.xml" value="0.21240942028985507" />
+        <entry key="..\:/Users/absat/AndroidStudioProjects/MyApplication/app/src/main/res/layout/img_border.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/absat/AndroidStudioProjects/MyApplication/app/src/main/res/layout/resume_item.xml" value="0.8" />
+        <entry key="..\:/Users/absat/AndroidStudioProjects/MyApplication/app/src/main/res/layout/teeee.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/absat/AndroidStudioProjects/MyApplication/app/src/main/res/layout/test.xml" value="0.24864130434782608" />
+        <entry key="..\:/Users/absat/AndroidStudioProjects/MyApplication/app/src/main/res/layout/vacancy_item.xml" value="0.536" />
+        <entry key="..\:/Users/absat/AndroidStudioProjects/MyApplication/app/src/main/res/mipmap-anydpi-v26/ic_arrow_round.xml" value="0.124" />
+        <entry key="..\:/Users/absat/AndroidStudioProjects/MyApplication/app/src/main/res/mipmap-anydpi-v26/ic_background.xml" value="0.241" />
+        <entry key="..\:/Users/absat/AndroidStudioProjects/MyApplication/app/src/main/res/mipmap-anydpi-v26/ic_profileAva.xml" value="0.124" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>
