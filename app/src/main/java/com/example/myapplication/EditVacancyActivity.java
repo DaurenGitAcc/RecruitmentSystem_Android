@@ -13,11 +13,9 @@ import android.view.View;
 import com.example.myapplication.adapter.VacancyAdapter;
 import com.example.myapplication.database.DatabaseAdapter;
 import com.example.myapplication.model.Company;
-import com.example.myapplication.model.Resume;
 import com.example.myapplication.model.User;
 import com.example.myapplication.model.Vacancy;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class EditVacancyActivity extends AppCompatActivity {
@@ -50,7 +48,7 @@ public class EditVacancyActivity extends AppCompatActivity {
 
         user = adapter.getUserByEmail(email);
         company = adapter.getCompanyByUserId(user.getId());
-        List<Vacancy> vacancies = adapter.getVacancies(company.getId());
+        //List<Vacancy> vacancies = adapter.getVacancies(company.getId());
 
         adapter.close();
 
@@ -68,7 +66,7 @@ public class EditVacancyActivity extends AppCompatActivity {
 
     private void setVacancyRecycler(List<Vacancy> vacancies) {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this,RecyclerView.VERTICAL,false);
-        vacancyRecycler = findViewById(R.id.vacancyRecycler);
+        vacancyRecycler = findViewById(R.id.resumeRecycler);
         vacancyRecycler.setLayoutManager(layoutManager);
 
         VacancyAdapter.OnStateClickListener vacancyClickListener = new VacancyAdapter.OnStateClickListener() {
@@ -81,7 +79,7 @@ public class EditVacancyActivity extends AppCompatActivity {
             }
         };
 
-        vacancyAdapter = new VacancyAdapter(this,vacancies,true,vacancyClickListener);
+        vacancyAdapter = new VacancyAdapter(this,vacancies,1,vacancyClickListener);
         vacancyRecycler.setAdapter(vacancyAdapter);
     }
 

@@ -98,9 +98,19 @@ public class ProfileCompanyEdit1Activity extends AppCompatActivity {
                         //объект и отображаем в элементе ImageView нашего интерфейса:
                         final Uri imageUri = imageReturnedIntent.getData();
                         final InputStream imageStream = getContentResolver().openInputStream(imageUri);
-                        final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
+                        Bitmap selectedImage;
+                        try{
+                            selectedImage = BitmapFactory.decodeStream(imageStream);
+                        }
+                        catch (OutOfMemoryError e){
+                            BitmapFactory.Options options = new BitmapFactory.Options();
+                            options.inSampleSize=2;
+                            selectedImage = BitmapFactory.decodeStream(imageStream,null,options);
+                        }
+                        int nh = (int) ( selectedImage.getHeight() * (512.0 / selectedImage.getWidth()) );
+                        Bitmap scaled = Bitmap.createScaledBitmap(selectedImage, 512, nh, true);
 
-                        company.setLogo(selectedImage);
+                        company.setLogo(scaled);
 
 
                         //---------------------

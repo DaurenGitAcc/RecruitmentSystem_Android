@@ -9,6 +9,8 @@ import android.graphics.BitmapFactory;
 
 import com.example.myapplication.model.Applicant;
 import com.example.myapplication.model.Company;
+import com.example.myapplication.model.Response_r;
+import com.example.myapplication.model.Response_v;
 import com.example.myapplication.model.Resume;
 import com.example.myapplication.model.Role;
 import com.example.myapplication.model.User;
@@ -260,6 +262,76 @@ public class DatabaseAdapter {
         String[] whereArgs = new String[]{String.valueOf(id)};
         return database.delete(DatabaseHelper.TABLE_USER, whereClause, whereArgs);
     }
+    public long deleteApplicant(long applicant_id){
+
+        long user_id=-1;
+        String query = String.format("SELECT * FROM %s WHERE %s=?",DatabaseHelper.TABLE_APPLICANT, DatabaseHelper.APPLICANT_COLUMN_ID);
+        Cursor cursor = database.rawQuery(query, new String[]{ String.valueOf(applicant_id)});
+        if(cursor.moveToFirst()){
+            user_id = cursor.getLong(cursor.getColumnIndexOrThrow(DatabaseHelper.APPLICANT_COLUMN_USERID));
+        }
+
+        long resume_id=-1;
+        query = String.format("SELECT * FROM %s WHERE %s=?",DatabaseHelper.TABLE_RESUME, DatabaseHelper.RESUME_COLUMN_APPLICANTID);
+        cursor = database.rawQuery(query, new String[]{ String.valueOf(applicant_id)});
+        if(cursor.moveToFirst()){
+            resume_id = cursor.getLong(cursor.getColumnIndexOrThrow(DatabaseHelper.RESUME_COLUMN_ID));
+        }
+        cursor.close();
+        deleteResume(resume_id);
+        deleteUser(user_id);
+        String whereClause = String.format("%s=?",DatabaseHelper.APPLICANT_COLUMN_USERID);
+        String[] whereArgs = new String[]{String.valueOf(user_id)};
+        return database.delete(DatabaseHelper.TABLE_APPLICANT, whereClause, whereArgs);
+    }
+    public long deleteResume(long resume_id){
+        deleteAllApplicantResponse(resume_id);
+        String whereClause = "id = ?";
+        String[] whereArgs = new String[]{String.valueOf(resume_id)};
+        return database.delete(DatabaseHelper.TABLE_RESUME, whereClause, whereArgs);
+    }
+    public long deleteAllApplicantResponse(long resume_id){
+        String whereClause = String.format("%s=?",DatabaseHelper.RESPONSE_COLUMN_RESUMEID);
+        String[] whereArgs = new String[]{String.valueOf(resume_id)};
+        return database.delete(DatabaseHelper.TABLE_RESPONSE, whereClause, whereArgs);
+    }
+
+
+    public long deleteCompany(long company_id){
+
+        long user_id=-1;
+        String query = String.format("SELECT * FROM %s WHERE %s=?",DatabaseHelper.TABLE_COMPANY, DatabaseHelper.COMPANY_COLUMN_ID);
+        Cursor cursor = database.rawQuery(query, new String[]{ String.valueOf(company_id)});
+        if(cursor.moveToFirst()){
+            user_id = cursor.getLong(cursor.getColumnIndexOrThrow(DatabaseHelper.COMPANY_COLUMN_USERID));
+        }
+
+        long vacancy_id=-1;
+        query = String.format("SELECT * FROM %s WHERE %s=?",DatabaseHelper.TABLE_VACANCY, DatabaseHelper.VACANCY_COLUMN_COMPANYID);
+        cursor = database.rawQuery(query, new String[]{ String.valueOf(company_id)});
+        while (cursor.moveToNext()){
+            vacancy_id = cursor.getLong(cursor.getColumnIndexOrThrow(DatabaseHelper.VACANCY_COLUMN_ID));
+            deleteVacancy(vacancy_id);
+        }
+        cursor.close();
+        deleteUser(user_id);
+        String whereClause = String.format("%s=?",DatabaseHelper.COMPANY_COLUMN_ID);
+        String[] whereArgs = new String[]{String.valueOf(company_id)};
+        return database.delete(DatabaseHelper.TABLE_COMPANY, whereClause, whereArgs);
+    }
+
+    public long deleteVacancy(long vacancy_id){
+        deleteAllVacancyResponse(vacancy_id);
+        String whereClause = "id = ?";
+        String[] whereArgs = new String[]{String.valueOf(vacancy_id)};
+        return database.delete(DatabaseHelper.TABLE_VACANCY, whereClause, whereArgs);
+    }
+
+    public long deleteAllVacancyResponse(long vacancy_id){
+        String whereClause = String.format("%s=?",DatabaseHelper.RESPONSE_COLUMN_VACANCYID);
+        String[] whereArgs = new String[]{String.valueOf(vacancy_id)};
+        return database.delete(DatabaseHelper.TABLE_RESPONSE, whereClause, whereArgs);
+    }
 
 
     public long insertResume(Resume resume){
@@ -313,12 +385,29 @@ public class DatabaseAdapter {
         return  resume;
     }
 
-    public long deleteResume(long id){
+    public Resume getResume(long resume_id){
+        Resume resume = null;
+        String query = String.format("SELECT * FROM %s WHERE %s=?",DatabaseHelper.TABLE_RESUME, DatabaseHelper.RESUME_COLUMN_ID);
+        Cursor cursor = database.rawQuery(query, new String[]{ String.valueOf(resume_id)});
+        if(cursor.moveToFirst()){
 
-        String whereClause = "id = ?";
-        String[] whereArgs = new String[]{String.valueOf(id)};
-        return database.delete(DatabaseHelper.TABLE_RESUME, whereClause, whereArgs);
+            String salary = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.RESUME_COLUMN_SALARY));
+            String schedule = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.RESUME_COLUMN_SCHEDULE));
+            String experience = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.RESUME_COLUMN_EXPERIENCE));
+            String tech_stack = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.RESUME_COLUMN_TECH_STACK));
+            String education = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.RESUME_COLUMN_EDUCATION));
+            String specialty = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.RESUME_COLUMN_SPECIALTY));
+            String person_description = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.RESUME_COLUMN_PERSON_DESCR));
+            long id = cursor.getLong(cursor.getColumnIndexOrThrow(DatabaseHelper.RESUME_COLUMN_ID));
+            long applicant_id = cursor.getLong(cursor.getColumnIndexOrThrow(DatabaseHelper.RESUME_COLUMN_APPLICANTID));
+
+            resume = new Resume(id,experience,salary,schedule,tech_stack,education,specialty,person_description,getApplicant(applicant_id));
+        }
+        cursor.close();
+        return  resume;
     }
+
+
 
     public long insertVacancy(Vacancy vacancy){
 
@@ -344,12 +433,6 @@ public class DatabaseAdapter {
 
         return database.update(DatabaseHelper.TABLE_VACANCY, cv, whereClause, null);
     }
-    public long deleteVacancy(long id){
-
-        String whereClause = "id = ?";
-        String[] whereArgs = new String[]{String.valueOf(id)};
-        return database.delete(DatabaseHelper.TABLE_VACANCY, whereClause, whereArgs);
-    }
     public List<Vacancy> getVacancies(long comp_id){
         ArrayList<Vacancy> vacancies = new ArrayList<>();
         String query = String.format("SELECT * FROM %s WHERE %s=?",DatabaseHelper.TABLE_VACANCY, DatabaseHelper.VACANCY_COLUMN_COMPANYID);
@@ -368,6 +451,14 @@ public class DatabaseAdapter {
         }
         cursor.close();
         return  vacancies;
+    }
+
+    public boolean ownVacancy(long comp_id,long vacancy_id){
+        ArrayList<Vacancy> vacancies = new ArrayList<>();
+        String query = String.format("SELECT * FROM %s WHERE %s=? AND %s=?",DatabaseHelper.TABLE_VACANCY, DatabaseHelper.VACANCY_COLUMN_COMPANYID,DatabaseHelper.VACANCY_COLUMN_ID);
+        Cursor cursor = database.rawQuery(query, new String[]{ String.valueOf(comp_id), String.valueOf(vacancy_id)});
+
+        return cursor.moveToFirst();
     }
 
     public List<Vacancy> getAllVacancies(){
@@ -405,6 +496,67 @@ public class DatabaseAdapter {
         }
         cursor.close();
         return  vacancy;
+    }
+
+    public long insertResponse(long V_id,long R_id){
+
+        ContentValues cv = new ContentValues();
+        cv.put(DatabaseHelper.RESPONSE_COLUMN_VACANCYID, V_id);
+        cv.put(DatabaseHelper.RESPONSE_COLUMN_RESUMEID, R_id);
+
+        return  database.insert(DatabaseHelper.TABLE_RESPONSE, null, cv);
+    }
+
+    public long deleteResponse(long vacancy_id,long resume_id){
+
+        String whereClause = String.format("%s=? AND %s=?",DatabaseHelper.RESPONSE_COLUMN_VACANCYID, DatabaseHelper.RESPONSE_COLUMN_RESUMEID);
+        String[] whereArgs = new String[]{String.valueOf(vacancy_id),String.valueOf(resume_id)};
+        return database.delete(DatabaseHelper.TABLE_RESPONSE, whereClause, whereArgs);
+    }
+
+
+
+    public Response_v getAllVResponse(Vacancy vacancy){
+        Response_v response_v = new Response_v();
+        response_v.setVacancy(vacancy);
+        ArrayList<Resume> resumes =new ArrayList<>();
+        String query = String.format("SELECT * FROM %s WHERE %s=?",DatabaseHelper.TABLE_RESPONSE, DatabaseHelper.RESPONSE_COLUMN_VACANCYID);
+        Cursor cursor = database.rawQuery(query, new String[]{ String.valueOf(vacancy.getId())});
+        while (cursor.moveToNext()){
+            long resume_id = cursor.getLong(cursor.getColumnIndexOrThrow(DatabaseHelper.RESPONSE_COLUMN_RESUMEID));
+
+            Resume resume=getResume(resume_id);
+
+            resumes.add(resume);
+        }
+        response_v.setResumes(resumes);
+        cursor.close();
+        return  response_v;
+    }
+
+    public Response_r getAllRResponse(Resume resume){
+        Response_r response_r = new Response_r();
+        response_r.setResume(resume);
+        ArrayList<Vacancy> vacancies =new ArrayList<>();
+        String query = String.format("SELECT * FROM %s WHERE %s=?",DatabaseHelper.TABLE_RESPONSE, DatabaseHelper.RESPONSE_COLUMN_RESUMEID);
+        Cursor cursor = database.rawQuery(query, new String[]{ String.valueOf(resume.getId())});
+        while (cursor.moveToNext()){
+            long vacancy_id = cursor.getLong(cursor.getColumnIndexOrThrow(DatabaseHelper.RESPONSE_COLUMN_VACANCYID));
+
+            Vacancy vacancy=getVacancy(vacancy_id);
+
+            vacancies.add(vacancy);
+        }
+        response_r.setVacancies(vacancies);
+        cursor.close();
+        return  response_r;
+    }
+
+    public boolean isExistResponse(long V_id,long R_id){
+        String query = String.format("SELECT * FROM %s WHERE %s=? AND %s=?",DatabaseHelper.TABLE_RESPONSE, DatabaseHelper.RESPONSE_COLUMN_VACANCYID,DatabaseHelper.RESPONSE_COLUMN_RESUMEID);
+        Cursor cursor = database.rawQuery(query, new String[]{ String.valueOf(V_id),String.valueOf(R_id)});
+
+        return cursor.moveToFirst();
     }
 
 

@@ -18,7 +18,6 @@ import com.example.myapplication.database.DatabaseAdapter;
 import com.example.myapplication.model.User;
 import com.example.myapplication.model.Vacancy;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class SearchVacancyActivity extends AppCompatActivity implements SearchView.OnQueryTextListener {
@@ -56,15 +55,29 @@ public class SearchVacancyActivity extends AppCompatActivity implements SearchVi
         super.onResume();
         email = sharedpreferences.getString(EMAIL_KEY, null);
 
+
+
         adapter.open();
 
         user=adapter.getUserByEmail(email);
+        try {
+            user.getEmail();
+        }
+        catch (Exception ex){
+            SharedPreferences.Editor editor = sharedpreferences.edit();
+            editor.clear();
+            editor.apply();
+            Intent i = new Intent(SearchVacancyActivity.this, LoginActivity.class);
+            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(i);
+            finish();
+        }
 
         setVacancyRecycler(adapter.getAllVacancies());
 
         adapter.close();
 
-        Toast.makeText(this, "Welcome "+user.getEmail(), Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Welcome ", Toast.LENGTH_SHORT).show();
         if(email==null){
             /*Intent i = new Intent(this, LoginActivity.class);
             i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -84,10 +97,14 @@ public class SearchVacancyActivity extends AppCompatActivity implements SearchVi
 
         startActivity(intent);
     }
+    public void toResponse(View view) {
+        Intent intent = new Intent(this, ResponseActivity.class);
+        startActivity(intent);
+    }
 
     private void setVacancyRecycler(List<Vacancy> vacancies) {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this,RecyclerView.VERTICAL,false);
-        vacancyRecycler = findViewById(R.id.vacancyRecycler);
+        vacancyRecycler = findViewById(R.id.resumeRecycler);
         vacancyRecycler.setLayoutManager(layoutManager);
 
         VacancyAdapter.OnStateClickListener vacancyClickListener = new VacancyAdapter.OnStateClickListener() {
@@ -100,7 +117,7 @@ public class SearchVacancyActivity extends AppCompatActivity implements SearchVi
 
             }
         };
-        vacancyAdapter = new VacancyAdapter(this,vacancies,false,vacancyClickListener);
+        vacancyAdapter = new VacancyAdapter(this,vacancies,0,vacancyClickListener);
         vacancyRecycler.setAdapter(vacancyAdapter);
     }
 

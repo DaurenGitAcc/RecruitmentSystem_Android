@@ -10,6 +10,7 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -52,6 +53,8 @@ public class ProfileEmployeeActivity extends AppCompatActivity {
     TextView UserSchedule;
     TextView UserTechStack;
 
+    Button EditButton;
+
     private DatabaseAdapter adapter;
 
     @Override
@@ -92,6 +95,8 @@ public class ProfileEmployeeActivity extends AppCompatActivity {
         UserSchedule = findViewById(R.id.textSchedule);
         UserTechStack = findViewById(R.id.textTechStack);
 
+        EditButton = findViewById(R.id.button2);
+
 
     }
 
@@ -106,6 +111,14 @@ public class ProfileEmployeeActivity extends AppCompatActivity {
             finish();
         }
         adapter.open();
+
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            email = extras.getString("applicantEmail");
+            EditButton.setVisibility(View.GONE);
+            EditButton.setEnabled(false);
+        }
+
         User user = adapter.getUserByEmail(email);
 
         Applicant applicant=null;

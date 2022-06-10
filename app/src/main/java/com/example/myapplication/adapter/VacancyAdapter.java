@@ -8,11 +8,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.R;
-import com.example.myapplication.SearchVacancyActivity;
 import com.example.myapplication.model.Vacancy;
 
 import java.util.ArrayList;
@@ -32,9 +30,9 @@ public class VacancyAdapter extends RecyclerView.Adapter<VacancyAdapter.VacancyV
     List<Vacancy> vacancies;
 
     private ArrayList<Vacancy> arraylist;
-    boolean type;
+    int type;
 
-    public VacancyAdapter(Context context, List<Vacancy> vacancies,boolean type, OnStateClickListener onClickListener) {
+    public VacancyAdapter(Context context, List<Vacancy> vacancies,int type, OnStateClickListener onClickListener) {
         this.context = context;
         this.vacancies = vacancies;
         this.onClickListener = onClickListener;
@@ -54,17 +52,27 @@ public class VacancyAdapter extends RecyclerView.Adapter<VacancyAdapter.VacancyV
     @Override
     public void onBindViewHolder(@NonNull VacancyViewHolder holder, int position) {
         holder.positionName.setText(vacancies.get(position).getPosition());
-        holder.organizationName.setText("TOO ENGINEERING");
+        holder.organizationName.setText(vacancies.get(position).getCompany().getName());
         holder.salary.setText(vacancies.get(position).getSalary());
         holder.descriptionPosition.setText(vacancies.get(position).getPositionDescription());
         holder.divider.setVisibility(View.GONE);
-        if(type){
-            holder.organizationName.setVisibility(View.GONE);
-            holder.salary.setVisibility(View.GONE);
-            holder.descriptionPosition.setVisibility(View.GONE);
-            holder.LinkText.setText("Подробнее");
-            holder.divider.setVisibility(View.VISIBLE);
-            holder.positionName.setTextSize(12);
+        switch (type){
+            case 0:
+                break;
+            case 1:
+                holder.organizationName.setVisibility(View.GONE);
+                holder.salary.setVisibility(View.GONE);
+                holder.descriptionPosition.setVisibility(View.GONE);
+                holder.LinkText.setText("Подробнее");
+                holder.divider.setVisibility(View.VISIBLE);
+                holder.positionName.setTextSize(12);
+                break;
+            case 2:
+
+                holder.descriptionPosition.setVisibility(View.GONE);
+                holder.LinkText.setText("Подробнее");
+                holder.divider.setVisibility(View.VISIBLE);
+                break;
         }
 
         holder.responseButton.setOnClickListener(new View.OnClickListener(){
@@ -94,10 +102,10 @@ public class VacancyAdapter extends RecyclerView.Adapter<VacancyAdapter.VacancyV
         public VacancyViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            positionName=itemView.findViewById(R.id.positionName);
-            organizationName=itemView.findViewById(R.id.organizationName);
+            positionName=itemView.findViewById(R.id.applicant_name);
+            organizationName=itemView.findViewById(R.id.resume_experience);
             salary=itemView.findViewById(R.id.salary);
-            descriptionPosition=itemView.findViewById(R.id.descriptionPosition);
+            descriptionPosition=itemView.findViewById(R.id.resume_education);
             responseButton=itemView.findViewById(R.id.responseButton);
             LinkText=itemView.findViewById(R.id.buttonText);
             divider=itemView.findViewById(R.id.divider2);

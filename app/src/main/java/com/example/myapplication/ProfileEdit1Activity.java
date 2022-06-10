@@ -1,6 +1,7 @@
 package com.example.myapplication;
 
 import androidx.annotation.DrawableRes;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
@@ -8,6 +9,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
@@ -23,6 +25,9 @@ import com.example.myapplication.model.Applicant;
 import com.example.myapplication.model.User;
 
 import java.io.ByteArrayOutputStream;
+import java.io.DataInputStream;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -154,6 +159,39 @@ public class ProfileEdit1Activity extends AppCompatActivity {
         //Запускаем переход с ожиданием обратного результата в виде информации об изображении:
         startActivityForResult(photoPickerIntent, Pick_image);
     }
+////////////////
+    public Bitmap decodeSampledBitmapFromPath(String path, int reqWidth,
+                                              int reqHeight) {
+
+        final BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inJustDecodeBounds = true;
+        BitmapFactory.decodeFile(path, options);
+
+        options.inSampleSize = calculateInSampleSize(options, reqWidth,
+                reqHeight);
+
+        // Decode bitmap with inSampleSize set
+        options.inJustDecodeBounds = false;
+        Bitmap bmp = BitmapFactory.decodeFile(path, options);
+        return bmp;
+    }
+
+    public static int calculateInSampleSize(BitmapFactory.Options options,
+                                            int reqWidth, int reqHeight) {
+
+        final int height = options.outHeight;
+        final int width = options.outWidth;
+        int inSampleSize = 1;
+
+        if (height > reqHeight || width > reqWidth) {
+            if (width > height) {
+                inSampleSize = Math.round((float) height / (float) reqHeight);
+            } else {
+                inSampleSize = Math.round((float) width / (float) reqWidth);
+            }
+        }
+        return inSampleSize;
+    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent imageReturnedIntent) {
@@ -167,10 +205,21 @@ public class ProfileEdit1Activity extends AppCompatActivity {
                         //Получаем URI изображения, преобразуем его в Bitmap
                         //объект и отображаем в элементе ImageView нашего интерфейса:
                         final Uri imageUri = imageReturnedIntent.getData();
-                        final InputStream imageStream = getContentResolver().openInputStream(imageUri);
-                        final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
 
-                        applicant.setPhoto(selectedImage);
+                        final InputStream imageStream = getContentResolver().openInputStream(imageUri);
+                        Bitmap selectedImage;
+                        try{
+                            selectedImage = BitmapFactory.decodeStream(imageStream);
+                        }
+                        catch (OutOfMemoryError e){
+                            BitmapFactory.Options options = new BitmapFactory.Options();
+                            options.inSampleSize=2;
+                            selectedImage = BitmapFactory.decodeStream(imageStream,null,options);
+                        }
+                        int nh = (int) ( selectedImage.getHeight() * (512.0 / selectedImage.getWidth()) );
+                        Bitmap scaled = Bitmap.createScaledBitmap(selectedImage, 512, nh, true);
+                        applicant.setPhoto(scaled);
+
 
 
                         //---------------------
@@ -178,9 +227,10 @@ public class ProfileEdit1Activity extends AppCompatActivity {
 
 
                         ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                        selectedImage.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                        selectedImage.compress(Bitmap.CompressFormat.JPEG, 100, stream);
 
                         Photo.setImageBitmap(selectedImage);
+
                     } catch (FileNotFoundException e) {
                         e.printStackTrace();
                     }

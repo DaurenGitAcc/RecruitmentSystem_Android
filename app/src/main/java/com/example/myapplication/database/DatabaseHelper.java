@@ -74,8 +74,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     // названия столбцов Response
     static final String RESPONSE_COLUMN_ID = "id";
-    static final String RESPONSE_COLUMN_COMPANYID = "company_id";
-    static final String RESPONSE_COLUMN_APPLICANTID = "applicant_id";
+    static final String RESPONSE_COLUMN_VACANCYID = "vacancy_id";
+    static final String RESPONSE_COLUMN_RESUMEID = "resume_id";
 
     //------------------------------------------------------------------
 
