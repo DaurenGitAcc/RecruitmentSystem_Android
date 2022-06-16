@@ -124,9 +124,7 @@ public class EditResumeActivity extends AppCompatActivity {
             long a =adapter.updateResume(resume);
         }
         adapter.close();
-        /*Intent intent = new Intent(this, ProfileEditActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-        startActivity(intent);*/
+
         finish();
     }
 

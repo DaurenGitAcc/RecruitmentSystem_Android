@@ -39,11 +39,9 @@ public class ProfileEdit1Activity extends AppCompatActivity {
     public static final String SHARED_PREFS = "shared_prefs";
 
     public static final String EMAIL_KEY = "email_key";
-    public static final String ROLE_KEY = "role_key";
 
     SharedPreferences sharedpreferences;
     String email;
-    long role_id;
 
     EditText UserName;
     EditText UserSurname;
@@ -67,7 +65,6 @@ public class ProfileEdit1Activity extends AppCompatActivity {
 
         sharedpreferences = getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
         email = sharedpreferences.getString(EMAIL_KEY, null);
-        role_id = sharedpreferences.getLong(ROLE_KEY, 0);
 
 
         UserName = findViewById(R.id.editName);
@@ -108,14 +105,13 @@ public class ProfileEdit1Activity extends AppCompatActivity {
                     for (int i = 2; i <= cl && i < 6; i += 2) {
                         sel++;
                     }
-                    //Fix for pressing delete next to a forward slash
+
                     if (clean.equals(cleanC)) sel--;
 
                     if (clean.length() < 8){
                         clean = clean + ddmmyyyy.substring(clean.length());
                     }else{
-                        //This part makes sure that when we finish entering numbers
-                        //the date is correct, fixing it otherwise
+
                         int day  = Integer.parseInt(clean.substring(0,2));
                         int mon  = Integer.parseInt(clean.substring(2,4));
                         int year = Integer.parseInt(clean.substring(4,8));
@@ -124,9 +120,7 @@ public class ProfileEdit1Activity extends AppCompatActivity {
                         cal.set(Calendar.MONTH, mon-1);
                         year = (year<1900)?1900:(year>2100)?2100:year;
                         cal.set(Calendar.YEAR, year);
-                        // ^ first set year for the line below to work correctly
-                        //with leap years - otherwise, date e.g. 29/02/2012
-                        //would be automatically corrected to 28/02/2012
+
 
                         day = (day > cal.getActualMaximum(Calendar.DATE))? cal.getActualMaximum(Calendar.DATE):day;
                         clean = String.format("%02d%02d%02d",day, mon, year);
@@ -159,7 +153,7 @@ public class ProfileEdit1Activity extends AppCompatActivity {
         //Запускаем переход с ожиданием обратного результата в виде информации об изображении:
         startActivityForResult(photoPickerIntent, Pick_image);
     }
-////////////////
+
     public Bitmap decodeSampledBitmapFromPath(String path, int reqWidth,
                                               int reqHeight) {
 
@@ -170,7 +164,6 @@ public class ProfileEdit1Activity extends AppCompatActivity {
         options.inSampleSize = calculateInSampleSize(options, reqWidth,
                 reqHeight);
 
-        // Decode bitmap with inSampleSize set
         options.inJustDecodeBounds = false;
         Bitmap bmp = BitmapFactory.decodeFile(path, options);
         return bmp;
@@ -238,22 +231,22 @@ public class ProfileEdit1Activity extends AppCompatActivity {
         }
     }
 
-//    public void Delete(View view){
-//        adapter.open();
-//
-//        adapter.deleteUser(adapter.getUserByEmail(email).getId());
-//
-//        adapter.close();
-//
-//        SharedPreferences.Editor editor = sharedpreferences.edit();
-//        editor.clear();
-//        editor.apply();
-//
-//        Intent i = new Intent(this, LoginActivity.class);
-//        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-//        startActivity(i);
-//        finish();
-//    }
+    public void Delete(View view){
+        adapter.open();
+
+        adapter.deleteUser(adapter.getUserByEmail(email).getId());
+
+        adapter.close();
+
+        SharedPreferences.Editor editor = sharedpreferences.edit();
+        editor.clear();
+        editor.apply();
+
+        Intent i = new Intent(this, LoginActivity.class);
+        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(i);
+        finish();
+    }
 
 
     public void Save(View view){

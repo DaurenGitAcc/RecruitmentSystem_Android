@@ -129,10 +129,6 @@ public class MainActivity extends AppCompatActivity {
                     successRegistration=false;
                 }
                 break;
-
-
-
-
         }
         adapter.close();
         if(successRegistration){

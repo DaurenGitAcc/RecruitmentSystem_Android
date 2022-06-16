@@ -19,20 +19,13 @@ import com.example.myapplication.model.User;
 
 public class LoginActivity extends AppCompatActivity {
 
-    // creating constant keys for shared preferences.
     public static final String SHARED_PREFS = "shared_prefs";
 
-    // key for storing email.
     public static final String EMAIL_KEY = "email_key";
-    public static final String ROLE_KEY = "role_key";
 
-
-    // variable for shared preferences.
     SharedPreferences sharedpreferences;
     String email;
     long role_id;
-
-
 
     EditText UserEmail;
     EditText UserPassword;
@@ -51,8 +44,6 @@ public class LoginActivity extends AppCompatActivity {
         sharedpreferences = getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
 
         email = sharedpreferences.getString(EMAIL_KEY, null);
-        role_id = sharedpreferences.getLong(ROLE_KEY, 0);
-
 
     }
 
@@ -87,20 +78,14 @@ public class LoginActivity extends AppCompatActivity {
             }
             adapter.close();
             if (TextUtils.isEmpty(user.getEmail()) && TextUtils.isEmpty(user.getPassword())) {
-                // this method will call when email and password fields are empty.
                 Toast.makeText(LoginActivity.this, "Please Enter Email and Password", Toast.LENGTH_SHORT).show();
             } else {
                 SharedPreferences.Editor editor = sharedpreferences.edit();
 
-                // below two lines will put values for
-                // email and password in shared preferences.
                 editor.putString(EMAIL_KEY, user.getEmail());
-                editor.putLong(ROLE_KEY, user.getRole().getId());
 
-                // to save our data with key and value.
                 editor.apply();
 
-                // starting new activity.
                 Intent i = new Intent(this, SearchVacancyActivity.class);
                 startActivity(i);
                 finish();

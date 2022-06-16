@@ -126,7 +126,6 @@
 
     <android.widget.SearchView
         android:id="@+id/searchView"
-        android:iconifiedByDefault="false"
         android:layout_width="0dp"
         android:layout_height="30dp"
         android:layout_marginStart="28dp"
@@ -134,49 +133,25 @@
         android:layout_marginEnd="28dp"
         android:background="@color/white"
         android:backgroundTint="@color/white"
+        android:iconifiedByDefault="false"
         android:queryHint="Введите ключевые слова"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.476"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Spinner
-        android:id="@+id/spinner"
-        android:layout_width="81dp"
-        android:layout_height="34dp"
-        android:layout_marginTop="15dp"
-        android:backgroundTint="@color/white"
-        app:layout_constraintStart_toStartOf="@+id/searchView"
-        app:layout_constraintTop_toBottomOf="@+id/searchView" />
-
-    <Spinner
-        android:id="@+id/spinner2"
-        android:layout_width="81dp"
-        android:layout_height="34dp"
-        android:backgroundTint="@color/white"
-        app:layout_constraintEnd_toStartOf="@+id/spinner3"
-        app:layout_constraintStart_toEndOf="@+id/spinner"
-        app:layout_constraintTop_toTopOf="@+id/spinner" />
-
-    <Spinner
-        android:id="@+id/spinner3"
-        android:layout_width="81dp"
-        android:layout_height="34dp"
-        android:backgroundTint="@color/white"
-        app:layout_constraintEnd_toEndOf="@+id/searchView"
-        app:layout_constraintTop_toTopOf="@+id/spinner2" />
-
     <TextView
         android:id="@+id/textView8"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="28dp"
         android:layout_marginTop="15dp"
         android:fontFamily="@font/roboto"
         android:text="Вакансии для вас"
         android:textColor="@color/white"
         android:textSize="16sp"
-        app:layout_constraintStart_toStartOf="@+id/spinner"
-        app:layout_constraintTop_toBottomOf="@+id/spinner" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/searchView" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/resumeRecycler"

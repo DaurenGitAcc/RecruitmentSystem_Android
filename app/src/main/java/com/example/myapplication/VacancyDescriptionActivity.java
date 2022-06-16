@@ -28,7 +28,6 @@ public class VacancyDescriptionActivity extends AppCompatActivity {
 
     public static final String SHARED_PREFS = "shared_prefs";
     public static final String EMAIL_KEY = "email_key";
-    public static final String ROLE_KEY = "role_key";
     SharedPreferences sharedpreferences;
     String email;
 
@@ -113,6 +112,7 @@ public class VacancyDescriptionActivity extends AppCompatActivity {
                     //Response.setEnabled(false);
                     Response.setText("Резюме отправлено");
                 }
+                textResumeHolder.setVisibility(View.GONE);
             }
         }
         else{
@@ -134,8 +134,10 @@ public class VacancyDescriptionActivity extends AppCompatActivity {
         VacancySchedule.setText(vacancy.getSchedule());
         VacancyRequirements.setText(vacancy.getRequirements());
         CompanyName.setText(vacancy.getCompany().getName());
-        Icon.setImageBitmap(vacancy.getCompany().getLogo());
 
+        if(vacancy.getCompany().getLogo()!=null){
+            Icon.setImageBitmap(vacancy.getCompany().getLogo());
+        }
         if(vacancy.getPositionDescription()==null){
             VacancyDescription.setVisibility(View.GONE);
             VacancyDescriptionHolder.setVisibility(View.GONE);
@@ -177,12 +179,7 @@ public class VacancyDescriptionActivity extends AppCompatActivity {
         resumeRecycler.setAdapter(resumeAdapter);
     }
 
-    public void toSearch(View view) {
-        Intent intent = new Intent(this, SearchVacancyActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-        startActivity(intent);
-        finish();
-    }
+
 
     public void toResponse(View view){
         adapter.open();
@@ -203,6 +200,29 @@ public class VacancyDescriptionActivity extends AppCompatActivity {
         }
         adapter.close();
         recreate();
+    }
+
+    public void toProfile(View view) {
+        Intent intent;
+        if(user.getRole().getId()==1){
+            intent = new Intent(this, ProfileEmployeeActivity.class);
+        }
+        else{
+            intent = new Intent(this, ProfileCompanyActivity.class);
+        }
+
+        startActivity(intent);
+    }
+    public void toResponsePage(View view) {
+        Intent intent = new Intent(this, ResponseActivity.class);
+        startActivity(intent);
+    }
+
+    public void toSearch(View view) {
+        Intent intent = new Intent(this, SearchVacancyActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+        startActivity(intent);
+        finish();
     }
 
 }

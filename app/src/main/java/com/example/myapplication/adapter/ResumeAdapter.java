@@ -52,14 +52,14 @@ public class ResumeAdapter extends RecyclerView.Adapter<ResumeAdapter.ResumeView
     @Override
     public void onBindViewHolder(@NonNull ResumeViewHolder holder, int position) {
         holder.applicationName.setText(resumes.get(position).getApplicant().getSurname()+" "+resumes.get(position).getApplicant().getName());
-        if(resumes.get(position).getExperience()==null || resumes.get(position).getExperience()==""){
-            holder.resumeExperience.setText("Нет опыта");
-        }
-        else{
-            holder.resumeExperience.setText(resumes.get(position).getExperience());
-        }
-
-        holder.resumeEducation.setText(resumes.get(position).getEducation());
+//        if(resumes.get(position).getExperience()==null || resumes.get(position).getExperience()==""){
+//            holder.resumeExperience.setText("Нет опыта");
+//        }
+//        else{
+//           // holder.resumeExperience.setText(resumes.get(position).getExperience());
+//        }
+//
+//        //holder.resumeEducation.setText(resumes.get(position).getEducation());
 
         holder.divider.setVisibility(View.GONE);
         switch (type){
@@ -78,6 +78,8 @@ public class ResumeAdapter extends RecyclerView.Adapter<ResumeAdapter.ResumeView
              //   holder.descriptionPosition.setVisibility(View.GONE);
             //    holder.LinkText.setText("Подробнее");
                 holder.divider.setVisibility(View.VISIBLE);
+               // holder.resumeEducation.setVisibility(View.GONE);
+               // holder.resumeExperience.setVisibility(View.GONE);
                 break;
         }
 
@@ -107,8 +109,8 @@ public class ResumeAdapter extends RecyclerView.Adapter<ResumeAdapter.ResumeView
             super(itemView);
 
             applicationName=itemView.findViewById(R.id.applicant_name);
-            resumeExperience=itemView.findViewById(R.id.resume_experience);
-            resumeEducation=itemView.findViewById(R.id.resume_education);
+           // resumeExperience=itemView.findViewById(R.id.resume_experience);
+           // resumeEducation=itemView.findViewById(R.id.resume_education);
 
             responseButton=itemView.findViewById(R.id.responseButton);
             divider=itemView.findViewById(R.id.divider2);

@@ -27,10 +27,8 @@ public class ProfileEmployeeActivity extends AppCompatActivity {
 
     public static final String SHARED_PREFS = "shared_prefs";
     public static final String EMAIL_KEY = "email_key";
-    public static final String ROLE_KEY = "role_key";
     SharedPreferences sharedpreferences;
     String email;
-    long role_id;
 
     TextView UserNameSurname;
     TextView UserBirthdate;
@@ -62,18 +60,10 @@ public class ProfileEmployeeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile_employee);
 
-//        File imgFile = new File("/data/data/com.example.myapplication/files/PhotoTESTe.jpg");
-//        if(imgFile.exists()){
-//            Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
-//            ImageView img = findViewById(R.id.profileImg);
-//            img.setImageBitmap(myBitmap);
-//        }
-
         adapter = new DatabaseAdapter(this);
 
         sharedpreferences = getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
         email = sharedpreferences.getString(EMAIL_KEY, null);
-        role_id = sharedpreferences.getLong(ROLE_KEY, 0);
 
         UserNameSurname = findViewById(R.id.textNameSurname);
         UserBirthdate = findViewById(R.id.textBirthdate);
@@ -105,9 +95,7 @@ public class ProfileEmployeeActivity extends AppCompatActivity {
         super.onResume();
         email = sharedpreferences.getString(EMAIL_KEY, null);
         if(email==null){
-            /*Intent i = new Intent(this, LoginActivity.class);
-            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(i);*/
+
             finish();
         }
         adapter.open();
@@ -160,6 +148,12 @@ public class ProfileEmployeeActivity extends AppCompatActivity {
             UserSpecialty.setVisibility(View.VISIBLE);
             UserPersonDescription.setVisibility(View.VISIBLE);
 
+            if(TextUtils.isEmpty(user.getTel_number())){
+                UserTelNumber.setText(user.getTel_number());
+            }
+            else{
+                UserTelNumber.setVisibility(View.GONE);
+            }
             if(TextUtils.isEmpty(resume.getEducation())){
                 UserEducation.setText("Образование\nНе указано");
             }
